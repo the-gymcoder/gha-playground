@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+DIR="$( cd "$( dirname "${0}" )" >/dev/null 2>&1 && pwd )"
+IMAGE="$(${DIR}/image)"
+
+docker push "${IMAGE}" || {
+  cat <<EOF 1>&2
+    failed to push
+
+    are you authenticated? try executing 
+      ${DIR}/../../../bin/docker_registry_login
+EOF
+}

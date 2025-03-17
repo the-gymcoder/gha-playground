@@ -1,0 +1,30 @@
+name: Build dr project
+on:
+  push:
+    branches:
+      - init
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      PROJECT_NAME:
+        type: string
+        required: true
+        description: "PROJECT_NAME"
+        default: "dr"
+      REF:
+        type: string
+        required: true
+        description: "REF"
+        default: "master"
+
+jobs:
+  build-dr-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/build-push.yml@init
+    permissions:
+      contents: read
+    with:
+      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME }}
+      REF: ${{ github.event.inputs.REF }}
+    secrets: inherit
