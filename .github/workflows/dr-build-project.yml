@@ -38,5 +38,5 @@ jobs:
     with:
       PROJECT_NAME: dr
       REF: ${{ github.event.inputs.REF }}
-      ENVIRONMENT: "DEV"
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || "DEV" }}
     secrets: inherit
