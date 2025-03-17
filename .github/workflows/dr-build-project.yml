@@ -19,6 +19,11 @@ on:
         required: true
         description: "REF"
         default: "master"
+      TAG:
+        type: string
+        required: true
+        description: "VERSION_TAG"
+        default: "latest"
 
 jobs:
   build-dr-project:

@@ -8,6 +8,5 @@ docker push "${IMAGE}" || {
     failed to push
 
     are you authenticated? try executing 
-      ${DIR}/../../../bin/docker_registry_login
 EOF
 }

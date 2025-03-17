@@ -2,8 +2,7 @@
 set -euo pipefail
 DIR="$( cd "$( dirname "${0}" )" >/dev/null 2>&1 && pwd )"
 TAG="${TAG:-latest}"
-#REGISTRY="${CI_REGISTRY_IMAGE:-}"
-REGISTRY="docker.artifactory.bc.edu/gha-playground"
+REGISTRY="deenadayalan27/gha-playground"
 NAME="ea_$(basename $(dirname ${DIR}))"
 
 echo "${REGISTRY}/${NAME}:${TAG}"
