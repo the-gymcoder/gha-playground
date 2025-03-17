@@ -1,4 +1,4 @@
-name: Build dr project
+name: Release all project
 on:
   push:
     branches:
@@ -9,11 +9,6 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      PROJECT_NAME:
-        type: string
-        required: true
-        description: PROJECT_NAME
-        default: dr
       REF:
         type: string
         required: true
@@ -31,12 +26,11 @@ on:
         default: DEV
 
 jobs:
-  build-dr-project:
-    uses: the-gymcoder/workflows-catalog/.github/workflows/build-push.yml@init
+  release-all-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
       contents: read
     with:
-      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'test' }}
       REF: ${{ github.event.inputs.REF }}
       TAG: ${{ github.event.inputs.TAG }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
