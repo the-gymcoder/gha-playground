@@ -19,7 +19,7 @@ jobs:
   deploy-dr-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/deploy.yml@init
     permissions:
-      contents: read 
+      contents: read
     with:
       REF: ${{ github.event.inputs.REF }}
     secrets: inherit
