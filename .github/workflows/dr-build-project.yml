@@ -12,23 +12,23 @@ on:
       PROJECT_NAME:
         type: string
         required: true
-        description: "PROJECT_NAME"
-        default: "dr"
+        description: PROJECT_NAME
+        default: dr
       REF:
         type: string
         required: true
-        description: "REF"
-        default: "master"
+        description: REF
+        default: master
       TAG:
         type: string
         required: true
-        description: "VERSION_TAG"
-        default: "latest"
+        description: VERSION_TAG
+        default: latest
       ENVIRONMENT:
         type: string
         required: true
-        description: "ENVIRONMENT"
-        default: "DEV"
+        description: ENVIRONMENT
+        default: DEV
 
 jobs:
   build-dr-project:
@@ -38,5 +38,5 @@ jobs:
     with:
       PROJECT_NAME: dr
       REF: ${{ github.event.inputs.REF }}
-      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || "DEV" }}
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
