@@ -2,6 +2,7 @@ name: Build dr project
 on:
   push:
     branches:
+      - '*'
       - '!master'
   pull_request:
     branches:

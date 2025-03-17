@@ -2,7 +2,8 @@ name: Deploy dr project
 on:
   push:
     branches:
-      - init
+      - '*'
+      - '!master'
   pull_request:
     branches:
       - master
