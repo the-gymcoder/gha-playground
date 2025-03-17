@@ -7,6 +7,6 @@ docker push "${IMAGE}" || {
   cat <<EOF 1>&2
     failed to push
 
-    are you authenticated? try executing 
+    are you authenticated?
 EOF
 }
