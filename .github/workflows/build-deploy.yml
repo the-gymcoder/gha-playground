@@ -31,7 +31,7 @@ jobs:
     permissions:
       contents: read
     with:
-      REF: ${{ github.event.inputs.REF }}
-      TAG: ${{ github.event.inputs.TAG }}
+      REF: ${{ github.event.inputs.REF || github.ref_name }}
+      TAG: ${{ github.event.inputs.TAG || github.run_number }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
