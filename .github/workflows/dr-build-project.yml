@@ -37,7 +37,7 @@ jobs:
       contents: read
     with:
       PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'test' }}
-      REF: ${{ github.event.inputs.REF }}
-      TAG: ${{ github.event.inputs.TAG }}
+      REF: ${{ github.event.inputs.REF || github.ref_name }}
+      TAG: ${{ github.event.inputs.TAG || github.run_number }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
