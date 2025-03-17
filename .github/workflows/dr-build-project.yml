@@ -1,12 +1,5 @@
 name: Build dr project
 on:
-  push:
-    branches:
-      - '*'
-      - '!master'
-  pull_request:
-    branches:
-      - master
   workflow_dispatch:
     inputs:
       PROJECT_NAME:

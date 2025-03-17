@@ -1,12 +1,5 @@
 name: Deploy dr project
 on:
-  push:
-    branches:
-      - '*'
-      - '!master'
-  pull_request:
-    branches:
-      - master
   workflow_dispatch:
     inputs:
       REF:
