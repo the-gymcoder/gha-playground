@@ -14,6 +14,11 @@ on:
         type: string
         default: "master"
         required: true
+      ENVIRONMENT:
+        type: string
+        required: true
+        description: ENVIRONMENT
+        default: DEV
 
 jobs:
   deploy-dr-project:
@@ -22,4 +27,5 @@ jobs:
       contents: read
     with:
       REF: ${{ github.event.inputs.REF }}
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
