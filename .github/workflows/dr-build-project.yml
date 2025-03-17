@@ -36,7 +36,7 @@ jobs:
     permissions:
       contents: read
     with:
-      PROJECT_NAME: dr
+      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'test' }}
       REF: ${{ github.event.inputs.REF }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
