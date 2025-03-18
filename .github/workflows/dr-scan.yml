@@ -1,0 +1,34 @@
+name: Scan dr project
+on:
+  push:
+    branches:
+      - '**'
+      - '!master'
+  workflow_dispatch:
+    inputs:
+      REF:
+        description: "branch"
+        type: string
+        default: "master"
+        required: true
+      ENVIRONMENT:
+        type: string
+        required: true
+        description: ENVIRONMENT
+        default: DEV
+      TAG:
+        type: string
+        required: true
+        description: VERSION_TAG
+        default: latest
+
+jobs:
+  scan-dr-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/image-scan.yml@init
+    permissions:
+      contents: read
+    with:
+      REF: ${{ github.event.inputs.REF || github.ref_name }}
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+      TAG: ${{ github.event.inputs.TAG || github.run_number }}
+    secrets: inherit
