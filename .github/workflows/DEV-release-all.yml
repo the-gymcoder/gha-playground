@@ -21,7 +21,7 @@ on:
         default: latest
 
 env:
-  TEST_ENV_VARIABLE: "Deena"
+  TEST_ENV_VARIABLE: Deena
   ENVIRONMENT: DEV
 
 jobs:
