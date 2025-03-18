@@ -5,6 +5,7 @@ on:
       - '**'
       - '!master'
       - '!main'
+      - '!init'
   pull_request:
     branches:
       - master
