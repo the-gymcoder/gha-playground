@@ -27,8 +27,12 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
+    outputs:
+      REF: ${{ steps.set-vars.outputs.REF }}
+      TAG: ${{ steps.set-vars.outputs.TAG }}
     steps:
       - name: Variables and Parameter check
+        id: set-vars
         run: |
           #!/usr/bin/env bash
           set -euo pipefail
@@ -41,14 +45,16 @@ jobs:
           echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
           echo "APPS: ${{ vars.APPS }}"
           echo "=========================================================="
+          echo "::set-output name=REF::$REF"
+          echo "::set-output name=TAG::$TAG"
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
       contents: read
     with:
-      REF: ${{ env.REF }}
-      TAG: ${{ env.TAG }}
+      REF: ${{ needs.release-info.outputs.REF }}
+      TAG: ${{ needs.release-info.outputs.TAG }}
       ENVIRONMENT: ${{ env.ENVIRONMENT }}
     secrets: inherit
     needs:
