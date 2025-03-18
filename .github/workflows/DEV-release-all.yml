@@ -40,7 +40,7 @@ jobs:
         run: |
           #!/usr/bin/env bash
           set -euo pipefail
-          REF=${{ github.event.inputs.REF || github.ref_name }}
+          REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
           TAG=${{ github.event.inputs.TAG || github.run_number }}
           ENVIRONMENT=${{ env.ENVIRONMENT }}
           echo "=======================VARIABLES AND PARAMETER CHECK======================="
