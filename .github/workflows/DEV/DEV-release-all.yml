@@ -19,11 +19,9 @@ on:
         required: true
         description: VERSION_TAG
         default: latest
-      ENVIRONMENT:
-        type: string
-        required: true
-        description: ENVIRONMENT
-        default: DEV
+
+env:
+  ENVIRONMENT: DEV
 
 jobs:
   release-all-project:
@@ -33,5 +31,5 @@ jobs:
     with:
       REF: ${{ github.event.inputs.REF || github.ref_name }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
-      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT || 'DEV' }}
     secrets: inherit
