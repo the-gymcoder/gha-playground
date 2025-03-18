@@ -19,11 +19,32 @@ on:
         required: true
         description: VERSION_TAG
         default: latest
+      ENVIRONMENT:
+        type: string
+        required: true
+        description: ENVIRONMENT
+        default: DEV
 
 env:
+  TEST_ENV_VARIABLE: "Deena"
   ENVIRONMENT: DEV
 
 jobs:
+  release-info:
+    runs-on: ubuntu-latest
+    environment: ${{ env.ENVIRONMENT }}
+    steps:
+      - name: Release info
+        run: |
+          echo "=======================RELEASE INFO======================="
+          echo "REF: ${{ inputs.REF }}"
+          echo "TAG: ${{ inputs.TAG }}"
+          echo "ENVIRONMENT: ${{ inputs.ENVIRONMENT }}"
+          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
+          echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
+          echo "APPS: ${{ vars.APPS }}"
+          echo "=========================================================="
+
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
@@ -31,4 +52,7 @@ jobs:
     with:
       REF: ${{ github.event.inputs.REF || github.ref_name }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
+    needs:
+      - release-info
