@@ -27,7 +27,7 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
-    ennvironment: ${{ env.ENVIRONMENT }}
+    environment: ${{ env.ENVIRONMENT }}
     outputs:
       REF: ${{ steps.set-vars.outputs.REF }}
       TAG: ${{ steps.set-vars.outputs.TAG }}
