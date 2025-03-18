@@ -19,11 +19,6 @@ on:
         required: true
         description: VERSION_TAG
         default: latest
-      ENVIRONMENT:
-        type: string
-        required: true
-        description: ENVIRONMENT
-        default: DEV
 
 env:
   TEST_ENV_VARIABLE: "Deena"
@@ -33,14 +28,17 @@ jobs:
   release-info:
     runs-on: ubuntu-latest
     steps:
-      - name: Release info
+      - name: Variables and Parameter check
         run: |
-          echo "=======================RELEASE INFO======================="
-          echo "REF: ${{ inputs.REF }}"
-          echo "TAG: ${{ inputs.TAG }}"
-          echo "ENVIRONMENT: ${{ inputs.ENVIRONMENT }}"
-          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
+          #!/usr/bin/env bash
+          set -euo pipefail
+          REF=${{ github.event.inputs.REF || github.ref_name }}
+          TAG=${{ github.event.inputs.TAG || github.run_number }}
+          echo "=======================VARIABLES AND PARAMETER CHECK======================="
+          echo "REF=$REF" | tee -a $GITHUB_ENV
+          echo "TAG=$TAG" | tee -a $GITHUB_ENV
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
+          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
           echo "APPS: ${{ vars.APPS }}"
           echo "=========================================================="
 
@@ -49,9 +47,9 @@ jobs:
     permissions:
       contents: read
     with:
-      REF: ${{ github.event.inputs.REF || github.ref_name }}
-      TAG: ${{ github.event.inputs.TAG || github.run_number }}
-      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+      REF: ${{ env.REF }}
+      TAG: ${{ env.TAG }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     secrets: inherit
     needs:
       - release-info
