@@ -27,7 +27,6 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
     outputs:
       REF: ${{ steps.set-vars.outputs.REF }}
       TAG: ${{ steps.set-vars.outputs.TAG }}
@@ -47,7 +46,6 @@ jobs:
           echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
           echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
-          echo "APPS: ${{ vars.APPS }}"
           echo "=========================================================="
 
   release-all-project:
