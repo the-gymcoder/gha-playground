@@ -30,7 +30,7 @@ jobs:
     uses: the-gymcoder/workflows-catalog/.github/workflows/image-scan.yml@init
     permissions:
       contents: read
-      pull_requests: write
+      pull-requests: write
     with:
       REF: ${{ github.event.inputs.REF || github.ref_name }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
