@@ -31,5 +31,5 @@ jobs:
     with:
       REF: ${{ github.event.inputs.REF || github.ref_name }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
-      ENVIRONMENT: ${{ env.ENVIRONMENT || 'DEV' }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     secrets: inherit
