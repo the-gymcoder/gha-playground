@@ -30,6 +30,7 @@ jobs:
     outputs:
       REF: ${{ steps.set-vars.outputs.REF }}
       TAG: ${{ steps.set-vars.outputs.TAG }}
+      ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
     steps:
       - name: Variables and Parameter check
         id: set-vars
@@ -38,15 +39,15 @@ jobs:
           set -euo pipefail
           REF=${{ github.event.inputs.REF || github.ref_name }}
           TAG=${{ github.event.inputs.TAG || github.run_number }}
+          ENVIRONMENT=${{ env.ENVIRONMENT }}
           echo "=======================VARIABLES AND PARAMETER CHECK======================="
-          echo "REF=$REF" | tee -a $GITHUB_ENV
-          echo "TAG=$TAG" | tee -a $GITHUB_ENV
+          echo "REF=$REF" | tee -a $GITHUB_OUTPUT
+          echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
+          echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
           echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
           echo "APPS: ${{ vars.APPS }}"
           echo "=========================================================="
-          echo "::set-output name=REF::$REF"
-          echo "::set-output name=TAG::$TAG"
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
@@ -55,7 +56,7 @@ jobs:
     with:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
-      ENVIRONMENT: ${{ env.ENVIRONMENT }}
+      ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
     secrets: inherit
     needs:
       - release-info
