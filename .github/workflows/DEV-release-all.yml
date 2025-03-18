@@ -32,7 +32,6 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
     steps:
       - name: Release info
         run: |
