@@ -2,7 +2,7 @@ name: Release all project
 on:
   push:
     branches:
-      - '*'
+      - '**'
       - '!master'
   pull_request:
     branches:
