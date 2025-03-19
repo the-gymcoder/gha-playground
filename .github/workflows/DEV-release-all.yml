@@ -46,7 +46,7 @@ jobs:
           REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
           TAG=${{ github.event.inputs.TAG || github.run_number }}
           ENVIRONMENT=${{ env.ENVIRONMENT }}
-          APPS=${{ vars.APPS}}
+          APPS="${{ vars.APPS }}"
           echo "=======================VARIABLES AND PARAMETER CHECK======================="
           echo "REF=$REF" | tee -a $GITHUB_OUTPUT
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
