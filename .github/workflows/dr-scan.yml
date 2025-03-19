@@ -1,15 +1,5 @@
 name: Scan dr project
 on:
-  push:
-    branches:
-      - '**'
-      - '!master'
-      - '!main'
-      - '!init'
-  pull_request:
-    branches:
-      - master
-      - main
   workflow_dispatch:
     inputs:
       REF:
