@@ -29,13 +29,14 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
-    environment: DEV
+    environment: ${{ env.ENVIRONMENT }}
     permissions:
       contents: read
     outputs:
       REF: ${{ steps.set-vars.outputs.REF }}
       TAG: ${{ steps.set-vars.outputs.TAG }}
       ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
+      APPS: ${{ steps.set-vars.outputs.APPS }}
     steps:
       - name: Variables and Parameter check
         id: set-vars
@@ -45,10 +46,12 @@ jobs:
           REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
           TAG=${{ github.event.inputs.TAG || github.run_number }}
           ENVIRONMENT=${{ env.ENVIRONMENT }}
+          APPS=${{ vars.APPS}}
           echo "=======================VARIABLES AND PARAMETER CHECK======================="
           echo "REF=$REF" | tee -a $GITHUB_OUTPUT
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
+          echo "APPS=$APPS" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
           echo "=========================================================="
 
@@ -61,7 +64,7 @@ jobs:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
       ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
-      APPS: ${{ vars.APPS}}
+      APPS: ${{ needs.release-info.outputs.APPS }}
     secrets: inherit
     needs:
       - release-info
