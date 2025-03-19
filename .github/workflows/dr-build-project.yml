@@ -11,7 +11,7 @@ on:
         type: string
         required: true
         description: REF
-        default: master
+        default: main
       TAG:
         type: string
         required: true

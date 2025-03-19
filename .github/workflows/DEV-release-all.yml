@@ -16,7 +16,7 @@ on:
         type: string
         required: true
         description: REF
-        default: master
+        default: main
       TAG:
         type: string
         required: true
@@ -29,6 +29,8 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       REF: ${{ steps.set-vars.outputs.REF }}
       TAG: ${{ steps.set-vars.outputs.TAG }}
@@ -47,7 +49,6 @@ jobs:
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
-          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
           echo "=========================================================="
 
   release-all-project:
