@@ -29,7 +29,7 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
+    environment: DEV
     permissions:
       contents: read
     outputs:
