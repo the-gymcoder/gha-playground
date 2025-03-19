@@ -55,6 +55,7 @@ jobs:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
       contents: read
+      pull-requests: write
     with:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
