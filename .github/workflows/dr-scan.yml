@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       REF:
-        description: "branch"
+        description: main
         type: string
-        default: "master"
+        default: main
         required: true
       ENVIRONMENT:
         type: string
