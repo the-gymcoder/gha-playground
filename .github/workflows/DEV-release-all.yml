@@ -49,8 +49,16 @@ jobs:
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
-          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
           echo "=========================================================="
+
+  test-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Run tests
+        run: |
+          echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
