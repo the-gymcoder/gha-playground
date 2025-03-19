@@ -54,15 +54,6 @@ jobs:
           echo "APPS=$APPS" | tee -a $GITHUB_OUTPUT
           echo "=========================================================="
 
-  test-job:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Run tests
-        run: |
-          echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
-
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
