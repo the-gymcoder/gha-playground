@@ -5,7 +5,7 @@ on:
       - '**'
       - '!master'
       - '!main'
-      - '!init'
+      - '!dev'
   pull_request:
     branches:
       - master
@@ -24,7 +24,6 @@ on:
         default: latest
 
 env:
-  TEST_ENV_VARIABLE: Deena
   ENVIRONMENT: DEV
 
 jobs:
