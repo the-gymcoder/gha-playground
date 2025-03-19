@@ -1,0 +1,65 @@
+name: Release all project
+on:
+  push:
+    branches:
+      - '**'
+      - '!master'
+      - '!main'
+      - '!init'
+  pull_request:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+    inputs:
+      REF:
+        type: string
+        required: true
+        description: REF
+        default: master
+      TAG:
+        type: string
+        required: true
+        description: VERSION_TAG
+        default: latest
+
+env:
+  TEST_ENV_VARIABLE: Deena
+  ENVIRONMENT: DEV
+
+jobs:
+  release-info:
+    runs-on: ubuntu-latest
+    outputs:
+      REF: ${{ steps.set-vars.outputs.REF }}
+      TAG: ${{ steps.set-vars.outputs.TAG }}
+      ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
+    steps:
+      - name: Variables and Parameter check
+        id: set-vars
+        run: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
+          TAG=${{ github.event.inputs.TAG || github.run_number }}
+          ENVIRONMENT=${{ env.ENVIRONMENT }}
+          echo "=======================VARIABLES AND PARAMETER CHECK======================="
+          echo "REF=$REF" | tee -a $GITHUB_OUTPUT
+          echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
+          echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
+          echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
+          echo "TEST_ENV_VARIABLE: ${{ env.TEST_ENV_VARIABLE }}"
+          echo "=========================================================="
+
+  release-all-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
+    permissions:
+      contents: read
+      pull-requests: write
+    with:
+      REF: ${{ needs.release-info.outputs.REF }}
+      TAG: ${{ needs.release-info.outputs.TAG }}
+      ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
+    secrets: inherit
+    needs:
+      - release-info

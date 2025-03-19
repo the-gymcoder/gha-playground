@@ -1,0 +1,24 @@
+name: Deploy dr project
+on:
+  workflow_dispatch:
+    inputs:
+      REF:
+        description: "branch"
+        type: string
+        default: "master"
+        required: true
+      ENVIRONMENT:
+        type: string
+        required: true
+        description: ENVIRONMENT
+        default: DEV
+
+jobs:
+  deploy-dr-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/deploy.yml@init
+    permissions:
+      contents: read
+    with:
+      REF: ${{ github.event.inputs.REF }}
+      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+    secrets: inherit
