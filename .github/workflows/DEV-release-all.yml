@@ -52,7 +52,6 @@ jobs:
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
           echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
           echo "APPS=$APPS" | tee -a $GITHUB_OUTPUT
-          echo "ENVIRONMENT: ${{ env.ENVIRONMENT }}"
           echo "=========================================================="
 
   release-all-project:
@@ -63,7 +62,7 @@ jobs:
     with:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
-      ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
       APPS: ${{ needs.release-info.outputs.APPS }}
     secrets: inherit
     needs:
