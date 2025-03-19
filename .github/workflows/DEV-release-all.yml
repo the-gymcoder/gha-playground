@@ -29,6 +29,7 @@ env:
 jobs:
   release-info:
     runs-on: ubuntu-latest
+    environment: ${{ env.ENVIRONMENT }}
     permissions:
       contents: read
     outputs:
@@ -60,6 +61,7 @@ jobs:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
       ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
+      APPS: ${{ vars.APPS}}
     secrets: inherit
     needs:
       - release-info
