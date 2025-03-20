@@ -28,4 +28,8 @@ jobs:
       REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
+<<<<<<< HEAD
+=======
+      APP: "dr"
+>>>>>>> c63366a (fix something)
     secrets: inherit
