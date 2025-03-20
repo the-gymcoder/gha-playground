@@ -29,7 +29,10 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       APP: "dr"
 >>>>>>> c63366a (fix something)
+=======
+>>>>>>> 314c57a (fix)
     secrets: inherit
