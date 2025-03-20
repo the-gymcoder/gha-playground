@@ -63,7 +63,6 @@ jobs:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
       ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
-      APP: ${{ needs.release-info.outputs.APPS }}
     secrets: inherit
     needs:
       - release-info
