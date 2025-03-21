@@ -1,4 +1,4 @@
-name: Deploy dr project
+name: Deploy projects
 on:
   workflow_dispatch:
     inputs:
