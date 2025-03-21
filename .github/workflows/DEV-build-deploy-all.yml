@@ -25,9 +25,9 @@ on:
 env:
   ENVIRONMENT: DEV
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+# cancel-in-progress: true
 
 jobs:
   release-info:
@@ -58,6 +58,9 @@ jobs:
           echo "=========================================================="
 
   release-all-project:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
       contents: read
