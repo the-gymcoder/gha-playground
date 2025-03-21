@@ -66,10 +66,8 @@ jobs:
       contents: read
       pull-requests: write
     with:
-      REF: ${{ jobs.release-info.outputs.REF }}
-      TAG: ${{ jobs.release-info.outputs.TAG }}
-      ENVIRONMENT: ${{ jobs.release-info.outputs.ENVIRONMENT }}
-      APPS: ${{ jobs.release-info.outputs.APPS }}
+      REF: ${{ needs.release-info.outputs.REF }}
+      TAG: ${{ needs.release-info.outputs.TAG }}
+      ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
+      APPS: ${{ needs.release-info.outputs.APPS }}
     secrets: inherit
-    needs:
-      - release-info
