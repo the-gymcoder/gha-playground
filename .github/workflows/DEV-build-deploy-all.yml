@@ -1,15 +1,14 @@
 name: Release all project
 on:
-#  push:
-#    branches:
-#      - '**'
-#      - '!master'
-#      - '!main'
-#      - '!dev'
-#  pull_request:
-#    branches:
-#      - master
-#      - main
+  push:
+    branches:
+      - '**'
+      - '!master'
+      - '!main'
+  pull_request:
+    branches:
+      - master
+      - main
   workflow_dispatch:
     inputs:
       REF:
@@ -25,6 +24,10 @@ on:
 
 env:
   ENVIRONMENT: DEV
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   release-info:
