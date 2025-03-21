@@ -2,6 +2,11 @@ name: Scan dr project
 on:
   workflow_dispatch:
     inputs:
+      PROJECT_NAME:
+        type: string
+        required: true
+        description: PROJECT_NAME
+        default: dr
       REF:
         description: main
         type: string
@@ -28,4 +33,5 @@ jobs:
       REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
+      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'dr' }}
     secrets: inherit
