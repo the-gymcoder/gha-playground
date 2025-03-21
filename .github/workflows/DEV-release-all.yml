@@ -1,15 +1,15 @@
 name: Release all project
 on:
-  push:
-    branches:
-      - '**'
-      - '!master'
-      - '!main'
-      - '!dev'
-  pull_request:
-    branches:
-      - master
-      - main
+#  push:
+#    branches:
+#      - '**'
+#      - '!master'
+#      - '!main'
+#      - '!dev'
+#  pull_request:
+#    branches:
+#      - master
+#      - main
   workflow_dispatch:
     inputs:
       REF:
@@ -63,7 +63,6 @@ jobs:
       REF: ${{ needs.release-info.outputs.REF }}
       TAG: ${{ needs.release-info.outputs.TAG }}
       ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
-      APPS: ${{ needs.release-info.outputs.APPS }}
     secrets: inherit
     needs:
       - release-info

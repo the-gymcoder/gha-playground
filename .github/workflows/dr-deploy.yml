@@ -2,6 +2,11 @@ name: Deploy dr project
 on:
   workflow_dispatch:
     inputs:
+      PROJECT_NAME:
+        type: string
+        required: true
+        description: PROJECT_NAME
+        default: dr
       REF:
         description: branch
         type: string
@@ -12,6 +17,11 @@ on:
         required: true
         description: ENVIRONMENT
         default: DEV
+      TAG:
+        type: string
+        required: true
+        description: VERSION_TAG
+        default: latest
 
 jobs:
   deploy-dr-project:
@@ -21,4 +31,6 @@ jobs:
     with:
       REF: ${{ github.event.inputs.REF }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+      TAG: ${{ github.event.inputs.TAG || github.run_number }}
+      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'dr' }}
     secrets: inherit
