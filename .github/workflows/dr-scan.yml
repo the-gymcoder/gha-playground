@@ -10,7 +10,7 @@ on:
       REF:
         description: main
         type: string
-        default: main
+        default: REF
         required: true
       ENVIRONMENT:
         type: string
@@ -20,7 +20,7 @@ on:
       TAG:
         type: string
         required: true
-        description: VERSION_TAG
+        description: IMAGE_TAG
         default: latest
 
 jobs:
