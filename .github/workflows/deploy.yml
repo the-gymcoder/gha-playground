@@ -19,7 +19,7 @@ on:
         default: latest
 
 jobs:
-  deploy-dr-project:
+  deploy-projects:
     uses: the-gymcoder/workflows-catalog/.github/workflows/deploy.yml@init
     permissions:
       contents: read
