@@ -8,9 +8,9 @@ on:
         description: PROJECT_NAME
         default: dr
       REF:
-        description: main
+        description: REF
         type: string
-        default: REF
+        default: main
         required: true
       ENVIRONMENT:
         type: string
