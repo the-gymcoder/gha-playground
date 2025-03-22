@@ -49,6 +49,8 @@ jobs:
           #!/usr/bin/env bash
           set -euo pipefail
           DIR="$( cd "$( dirname "${0}" )" >/dev/null 2>&1 && pwd )"
+          pwd
+          ls -rlt
           echo "DIR: $DIR"
           echo "cat variables.yml"
           cat ${DIR}/environments/${ENVIRONMENT}/variables.yml | tee -a $GITHUB_OUTPUT
