@@ -1,4 +1,4 @@
-name: Release all project
+name: Dev Release all project
 on:
   push:
     branches:
