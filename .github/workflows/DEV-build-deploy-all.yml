@@ -35,10 +35,15 @@ jobs:
     permissions:
       contents: read
     outputs:
-      CONTAINER_HOST: ${{ steps.set-vars.outputs.container_host }}
-      APPS: ${{ steps.set-vars.outputs.apps }}
-      ENVIRONMENT: ${{ steps.set-vars.outputs.environment }}
-      IMAGE_REGISTRY: ${{ steps.set-vars.outputs.image_registry }}
+      CONTAINER_HOST: ${{ steps.set-vars.outputs.CONTAINER_HOST }}
+      APPS: ${{ steps.set-vars.outputs.APPS }}
+      ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
+      IMAGE_REGISTRY: ${{ steps.set-vars.outputs.IMAGE_REGISTRY }}
+      RELEASE_FILE: ${{ steps.set-vars.outputs.RELEASE_FILE }}
+      VERSION: ${{ steps.set-vars.outputs.VERSION }}
+      PRISTINE: ${{ steps.set-vars.outputs.PRISTINE }}
+      DEPLOY: ${{ steps.set-vars.outputs.DEPLOY }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -51,8 +56,6 @@ jobs:
           DIR="$(pwd)"
           echo "variables.yml"
           cat ${DIR}/environments/${ENVIRONMENT}/variables.yml | tee -a $GITHUB_OUTPUT
-          echo "GITHUB_OUTPUT"
-          cat $GITHUB_OUTPUT
 
   release-info:
     runs-on: ubuntu-latest

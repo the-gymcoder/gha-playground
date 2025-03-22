@@ -1,0 +1,5 @@
+variables:
+  project: dev
+  team: syseng
+  debug: true
+  version: "1.0.1"

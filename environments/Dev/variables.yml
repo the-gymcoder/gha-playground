@@ -1,4 +1,9 @@
-environment: DEV
-image_registry: deenadayalan27
-apps: dr loki thor
-container_host: 127.0.0.1
+variables:
+  IMAGE_REGISTRY: deenadayalan27
+  APPS: dr loki thor
+  CONTAINER_HOST: localhost
+  ENVIRONMENT: dev
+  RELEASE_FILE: dev.yml
+  VERSION: latest
+  PRISTINE: false
+  DEPLOY: true
