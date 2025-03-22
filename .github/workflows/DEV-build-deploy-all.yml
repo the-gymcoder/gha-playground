@@ -49,10 +49,9 @@ jobs:
           #!/usr/bin/env bash
           set -euo pipefail
           DIR="$(pwd)"
-          echo "DIR: $DIR"
-          echo "cat variables.yml"
+          echo "variables.yml"
           cat ${DIR}/environments/${ENVIRONMENT}/variables.yml | tee -a $GITHUB_OUTPUT
-          cat "GITHUB_OUTPUT"
+          echo "GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT
 
   release-info:
