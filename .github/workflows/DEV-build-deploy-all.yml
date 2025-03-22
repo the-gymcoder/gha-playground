@@ -22,14 +22,39 @@ on:
         description: VERSION_TAG
         default: latest
 
-env:
-  ENVIRONMENT: DEV
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  ENVIRONMENT: Dev
 jobs:
+  import_varaibles:
+    runs-on: ubuntu-latest
+    environment: DEV
+    permissions:
+      contents: read
+    outputs:
+      CONTAINER_HOST: ${{ steps.set-vars.outputs.container_host }}
+      APPS: ${{ steps.set-vars.outputs.apps }}
+      ENVIRONMENT: ${{ steps.set-vars.outputs.environment }}
+      IMAGE_REGISTRY: ${{ steps.set-vars.outputs.image_registry }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: "${{ inputs.REF }}"
+      - name: Export environment variables
+        run: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          DIR="$( cd "$( dirname "${0}" )" >/dev/null 2>&1 && pwd )"
+          echo "DIR: $DIR"
+          cat "variables.yml"
+          cat ${DIR}/environments/${ENVIRONMENT}/variables.yml | tee -a $GITHUB_OUTPUT
+          cat "GITHUB_OUTPUT"
+          cat $GITHUB_OUTPUT
+
   release-info:
     runs-on: ubuntu-latest
     environment: DEV

@@ -1,0 +1,4 @@
+environment: DEV
+image_registry: deenadayalan27
+apps: dr loki thor
+container_host: 127.0.0.1
