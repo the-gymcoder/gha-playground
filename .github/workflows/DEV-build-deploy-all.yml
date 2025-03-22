@@ -54,7 +54,7 @@ jobs:
           #!/usr/bin/env bash
           set -euo pipefail
           DIR="$(pwd)"
-          yq eval '.variables | to_entries | .[] | "\(.key)=\(.value)"' ${DIR}/environments/${ENVIRONMENT}/variables.yml | tee -a $GITHUB_OUTPUT
+          yq eval '.variables | to_entries | .[] | "\(.key)=\(.value)"' ${DIR}/environments/${ENVIRONMENT}/variables.yml >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
 
   release-info:
