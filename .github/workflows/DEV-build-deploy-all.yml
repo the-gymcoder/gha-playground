@@ -1,4 +1,5 @@
 name: Dev Release all project
+run-name: Deploy to dev by @${{ github.actor }}
 on:
   push:
     branches:
@@ -82,23 +83,6 @@ jobs:
           DIR="$(pwd)"
           JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
           echo "as-json=$JSON_CONTENT" | tee -a "$GITHUB_OUTPUT"
-
-  check:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Check the variables
-        run: |
-          echo "====print the ouptus from previous job===="
-          echo "REF: ${{ needs.import_varaibles.outputs.REF }}"
-          echo "TAG: ${{ needs.import_varaibles.outputs.TAG }}"
-          echo "ENVIRONMENT: ${{ needs.import_varaibles.outputs.ENVIRONMENT }}"
-          echo "APPS: ${{ needs.import_varaibles.outputs.APPS }}"
-          echo "CONTAINER_HOST: ${{ needs.import_varaibles.outputs.CONTAINER_HOST }}"
-          echo "IMAGE_REGISTRY: ${{ needs.import_varaibles.outputs.IMAGE_REGISTRY }}"
-    needs:
-      - import_varaibles
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
