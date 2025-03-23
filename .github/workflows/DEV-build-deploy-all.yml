@@ -100,18 +100,18 @@ jobs:
     needs:
       - import_varaibles
 
-  #release-all-project:
-  #  uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
-  #  permissions:
-  #    contents: read
-  #    pull-requests: write
-  #  with:
-  #    REF: ${{ needs.import_varaibles.outputs.REF }}
-  #    TAG: ${{ needs.import_varaibles.outputs.TAG }}
-  #    ENVIRONMENT: ${{ needs.import_varaibles.outputs.ENVIRONMENT }}
-  #    APPS: ${{ needs.import_varaibles.outputs.APPS }}
-  #    CONTAINER_HOST: ${{ needs.import_varaibles.outputs.CONTAINER_HOST }}
-  #    IMAGE_REGISTRY: ${{ needs.import_varaibles.outputs.IMAGE_REGISTRY }}
-  #  secrets: inherit
-  #  needs:
-  #    - import_varaibles
+  release-all-project:
+    uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
+    permissions:
+      contents: read
+      pull-requests: write
+    with:
+      REF: ${{ needs.import_varaibles.outputs.REF }}
+      TAG: ${{ needs.import_varaibles.outputs.TAG }}
+      ENVIRONMENT: ${{ needs.import_varaibles.outputs.ENVIRONMENT }}
+      APPS: ${{ needs.import_varaibles.outputs.APPS }}
+      CONTAINER_HOST: ${{ needs.import_varaibles.outputs.CONTAINER_HOST }}
+      IMAGE_REGISTRY: ${{ needs.import_varaibles.outputs.IMAGE_REGISTRY }}
+    secrets: inherit
+    needs:
+      - import_varaibles
