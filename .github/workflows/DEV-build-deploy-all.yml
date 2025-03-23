@@ -28,13 +28,15 @@ concurrency:
 
 env:
   ENVIRONMENT: dev
+
 jobs:
   import_varaibles:
     runs-on: ubuntu-latest
-    environment: DEV
     permissions:
       contents: read
     outputs:
+      REF: ${{ steps.set-inputs.outputs.REF }}
+      TAG: ${{ steps.set-inputs.outputs.TAG }}
       CONTAINER_HOST: ${{ steps.set-vars.outputs.CONTAINER_HOST }}
       APPS: ${{ steps.set-vars.outputs.APPS }}
       ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
@@ -43,23 +45,50 @@ jobs:
       VERSION: ${{ steps.set-vars.outputs.VERSION }}
       PRISTINE: ${{ steps.set-vars.outputs.PRISTINE }}
       DEPLOY: ${{ steps.set-vars.outputs.DEPLOY }}
+      WRAPPED_JSON: ${{ steps.set-more-vars.outputs.as-json }}
 
     steps:
+      - name: Input parameters
+        id: set-inputs
+        run: |
+          set -euo pipefail
+          echo "github.event.inputs.REF: ${{ github.event.inputs.REF }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+
+          REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
+          TAG=${{ github.event.inputs.TAG || github.run_number }}
+          echo "REF=$REF" | tee -a $GITHUB_OUTPUT
+          echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           ref: "${{ inputs.REF }}"
+
       - name: Export environment variables
+        id: set-vars
         run: |
-          #!/usr/bin/env bash
           set -euo pipefail
           DIR="$(pwd)"
-          yq eval '.variables | to_entries | .[] | "\(.key)=\(.value)"' ${DIR}/environments/${ENVIRONMENT}/variables.yml >> $GITHUB_OUTPUT
+          while IFS= read -r line; do
+            echo "$line" >> "$GITHUB_OUTPUT"
+          done < <(yq eval '.variables | to_entries | .[] | "\(.key)=\(.value)"' "${DIR}/environments/${ENVIRONMENT}/variables.yml")
+          cat $GITHUB_OUTPUT
+      
+      - name: Export more environment variables
+        id: set-more-vars
+        run: |
+          set -euo pipefail
+          DIR="$(pwd)"
+          JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
+          echo "as-json=$JSON_CONTENT" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT
 
   release-info:
     runs-on: ubuntu-latest
-    environment: DEV
+    environment: dev
     permissions:
       contents: read
     outputs:
