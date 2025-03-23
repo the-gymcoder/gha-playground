@@ -60,7 +60,6 @@ jobs:
           TAG=${{ github.event.inputs.TAG || github.run_number }}
           echo "REF=$REF" | tee -a $GITHUB_OUTPUT
           echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
-          cat $GITHUB_OUTPUT
 
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -73,9 +72,8 @@ jobs:
           set -euo pipefail
           DIR="$(pwd)"
           while IFS= read -r line; do
-            echo "$line" >> "$GITHUB_OUTPUT"
+            echo "$line" | tee -a "$GITHUB_OUTPUT"
           done < <(yq eval '.variables | to_entries | .[] | "\(.key)=\(.value)"' "${DIR}/environments/${ENVIRONMENT}/variables.yml")
-          cat $GITHUB_OUTPUT
       
       - name: Export more environment variables
         id: set-more-vars
@@ -83,38 +81,7 @@ jobs:
           set -euo pipefail
           DIR="$(pwd)"
           JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
-          echo "as-json=$JSON_CONTENT" >> "$GITHUB_OUTPUT"
-          cat $GITHUB_OUTPUT
-
-  release-info:
-    runs-on: ubuntu-latest
-    environment: dev
-    permissions:
-      contents: read
-    outputs:
-      REF: ${{ steps.set-vars.outputs.REF }}
-      TAG: ${{ steps.set-vars.outputs.TAG }}
-      ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
-      APPS: ${{ steps.set-vars.outputs.APPS }}
-    steps:
-      - name: Variables and Parameter check
-        id: set-vars
-        run: |
-          #!/usr/bin/env bash
-          set -euo pipefail
-          REF=${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
-          TAG=${{ github.event.inputs.TAG || github.run_number }}
-          ENVIRONMENT=${{ env.ENVIRONMENT }}
-          APPS="${{ vars.APPS }}"
-          echo "=======================VARIABLES AND PARAMETER CHECK======================="
-          echo "REF=$REF" | tee -a $GITHUB_OUTPUT
-          echo "TAG=$TAG" | tee -a $GITHUB_OUTPUT
-          echo "ENVIRONMENT=$ENVIRONMENT" | tee -a $GITHUB_OUTPUT
-          echo "APPS=$APPS" | tee -a $GITHUB_OUTPUT
-          echo "=========================================================="
-          echo "cat GITHUB_OUTPUT"
-          cat $GITHUB_OUTPUT
-          echo "=========================================================="
+          echo "as-json=$JSON_CONTENT" | tee -a "$GITHUB_OUTPUT"
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
@@ -122,10 +89,10 @@ jobs:
       contents: read
       pull-requests: write
     with:
-      REF: ${{ needs.release-info.outputs.REF }}
-      TAG: ${{ needs.release-info.outputs.TAG }}
-      ENVIRONMENT: ${{ needs.release-info.outputs.ENVIRONMENT }}
-      APPS: ${{ needs.release-info.outputs.APPS }}
+      REF: ${{ needs.import_varaibles.outputs.REF }}
+      TAG: ${{ needs.import_varaibles.outputs.TAG }}
+      ENVIRONMENT: ${{ needs.import_varaibles.outputs.ENVIRONMENT }}
+      APPS: ${{ needs.import_varaibles.outputs.APPS }}
     secrets: inherit
     needs:
-      - release-info
+      - import_varaibles
