@@ -31,7 +31,7 @@ env:
   ENVIRONMENT: dev
 
 jobs:
-  import_varaibles:
+  import_variables:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -46,7 +46,7 @@ jobs:
       VERSION: ${{ steps.set-vars.outputs.VERSION }}
       PRISTINE: ${{ steps.set-vars.outputs.PRISTINE }}
       DEPLOY: ${{ steps.set-vars.outputs.DEPLOY }}
-      WRAPPED_JSON: ${{ steps.set-more-vars.outputs.as-json }}
+      VARIABLES_JSON: ${{ steps.set-more-vars.outputs.as-json }}
 
     steps:
       - name: Input parameters
@@ -90,12 +90,13 @@ jobs:
       contents: read
       pull-requests: write
     with:
-      REF: ${{ needs.import_varaibles.outputs.REF }}
-      TAG: ${{ needs.import_varaibles.outputs.TAG }}
-      ENVIRONMENT: ${{ needs.import_varaibles.outputs.ENVIRONMENT }}
-      APPS: ${{ needs.import_varaibles.outputs.APPS }}
-      CONTAINER_HOST: ${{ needs.import_varaibles.outputs.CONTAINER_HOST }}
-      IMAGE_REGISTRY: ${{ needs.import_varaibles.outputs.IMAGE_REGISTRY }}
+      REF: ${{ needs.import_variables.outputs.REF }}
+      TAG: ${{ needs.import_variables.outputs.TAG }}
+      ENVIRONMENT: ${{ needs.import_variables.outputs.ENVIRONMENT }}
+      APPS: ${{ needs.import_variables.outputs.APPS }}
+      CONTAINER_HOST: ${{ needs.import_variables.outputs.CONTAINER_HOST }}
+      IMAGE_REGISTRY: ${{ needs.import_variables.outputs.IMAGE_REGISTRY }}
+      VARIABLES_JSON: ${{ needs.import_variables.outputs.VARIABLES_JSON }}
     secrets: inherit
     needs:
-      - import_varaibles
+      - import_variables
