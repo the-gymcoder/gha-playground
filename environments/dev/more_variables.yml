@@ -3,3 +3,6 @@ variables:
   team: syseng
   debug: true
   version: "1.0.1"
+  dr: dr
+  loki: loki
+  thor: thor
