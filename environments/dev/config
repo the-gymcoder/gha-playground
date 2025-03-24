@@ -1,5 +1,2 @@
-JIRA_CREATE=false
-JIRA_DESCRIPTION=test description
-JIRA_ESCALATE=no
-JIRA_SUMMARY=A bamboo plan in the dev plan suite failed
 ENVIRONMENT=dev
+RUNS_ON=ubuntu-latest

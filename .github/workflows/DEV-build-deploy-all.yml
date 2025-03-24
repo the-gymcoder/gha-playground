@@ -84,6 +84,9 @@ jobs:
           JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
           echo "as-json=$JSON_CONTENT" | tee -a "$GITHUB_OUTPUT"
 
+      - name: To JSON toJSON() converts things to a pretty-printed JSON string
+        run: echo 'Job context is ${{ toJSON(job) }}'
+
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
