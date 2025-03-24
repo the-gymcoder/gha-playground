@@ -84,8 +84,18 @@ jobs:
           JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
           echo "as-json=$JSON_CONTENT" | tee -a "$GITHUB_OUTPUT"
 
-      - name: To JSON toJSON() converts things to a pretty-printed JSON string
+      - name: job json output
         run: echo 'Job context is ${{ toJSON(job) }}'
+      
+      - name: job status
+        run: echo 'Job status context is ${{ toJSON(job.status) }}'
+      
+      - name: step status
+        run: | 
+          echo 'Step context is ${{ toJSON(steps.set-more-vars) }}'
+          echo 'Step context is ${{ toJSON(steps.set-more-vars.conclusion) }}'
+          echo 'Step context is ${{ toJSON(steps.set-more-vars.outcome) }}'
+          echo 'Step context is ${{ toJSON(steps.set-more-vars.outputs) }}'
 
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
