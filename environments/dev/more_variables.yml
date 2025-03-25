@@ -1,8 +1,5 @@
 variables:
-  project: dev
-  team: syseng
-  debug: true
-  version: "1.0.1"
+  source_repo: the-gymcoder/gha-playground
   dr: dr
   loki: loki
   thor: thor
