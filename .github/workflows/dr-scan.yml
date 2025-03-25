@@ -51,4 +51,5 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
       APPS: ${{ github.event.inputs.APPS || 'dr' }}
+      IMAGE_REGISTRY: ${{ inputs.IMAGE_REGISTRY }}
     secrets: inherit
