@@ -22,6 +22,11 @@ on:
         type: string
         required: true
         default: dr thor loki
+      CONTAINER_HOST:
+        description: "CONTAINER HOST"
+        type: string
+        required: true
+        default: localhost
       TAG:
         type: string
         required: true
@@ -39,4 +44,5 @@ jobs:
       REF: ${{ github.event.inputs.REF }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
+      CONTAINER_HOST: ${{ github.event.inputs.CONTAINER_HOST }}
     secrets: inherit
