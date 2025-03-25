@@ -3,7 +3,3 @@ variables:
   APPS: dr loki thor
   CONTAINER_HOST: localhost
   ENVIRONMENT: dev
-  RELEASE_FILE: dev.yml
-  VERSION: latest
-  PRISTINE: false
-  DEPLOY: true
