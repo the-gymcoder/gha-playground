@@ -17,6 +17,11 @@ on:
         required: true
         description: ENVIRONMENT
         default: DEV
+      APPS:
+        description: "APPS"
+        type: string
+        required: true
+        default: dr thor loki
       TAG:
         type: string
         required: true
@@ -29,6 +34,7 @@ jobs:
     permissions:
       contents: read
     with:
+      APPS: ${{ github.event.inputs.APPS }}
       RUNS_ON: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
       REF: ${{ github.event.inputs.REF }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
