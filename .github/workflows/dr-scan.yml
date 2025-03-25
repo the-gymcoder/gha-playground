@@ -50,5 +50,5 @@ jobs:
       REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
-      PROJECT_NAME: ${{ github.event.inputs.APPS || 'dr' }}
+      APPS: ${{ github.event.inputs.APPS || 'dr' }}
     secrets: inherit
