@@ -17,6 +17,11 @@ on:
         required: true
         description: REF
         default: main
+      REPO:
+        type: string
+        required: true
+        description: repo
+        default: "the-gymcoder/gha-playground"
       TAG:
         type: string
         required: true
@@ -37,6 +42,7 @@ jobs:
       RUNS_ON: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
       PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'dr' }}
       REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
+      REPO: ${{ github.event.inputs.REPO }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
     secrets: inherit
