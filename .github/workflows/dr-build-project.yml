@@ -30,13 +30,14 @@ on:
 
 jobs:
   build-dr-project:
-    uses: the-gymcoder/workflows-catalog/.github/workflows/build-push.yml@init
-    permissions:
-      contents: read
-    with:
-      RUNS_ON: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
-      PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'dr' }}
-      REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
-      TAG: ${{ github.event.inputs.TAG || github.run_number }}
-      ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
-    secrets: inherit
+    runs-on: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
+    steps:
+      - name: Trigger build reuable workflow
+        uses: the-gymcoder/workflows-catalog/.github/workflows/build-push.yml@init
+        with:
+          RUNS_ON: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
+          PROJECT_NAME: ${{ github.event.inputs.PROJECT_NAME || 'dr' }}
+          REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
+          TAG: ${{ github.event.inputs.TAG || github.run_number }}
+          ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
+        secrets: inherit
