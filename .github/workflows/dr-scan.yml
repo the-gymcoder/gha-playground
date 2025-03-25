@@ -2,6 +2,11 @@ name: Scan dr project
 on:
   workflow_dispatch:
     inputs:
+      RUNS_ON:
+        description: runner tag or runner group
+        type: string
+        required: true
+        default: ubuntu-latest
       PROJECT_NAME:
         type: string
         required: true
@@ -30,6 +35,7 @@ jobs:
       contents: read
       pull-requests: write
     with:
+      RUNS_ON: ${{ github.event.inputs.RUNS_ON || 'ubuntu-latest' }}
       REF: ${{ github.event.inputs.REF || github.head_ref || github.ref_name }}
       ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT || 'DEV' }}
       TAG: ${{ github.event.inputs.TAG || github.run_number }}

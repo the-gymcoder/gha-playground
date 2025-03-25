@@ -38,6 +38,9 @@ jobs:
     outputs:
       REF: ${{ steps.set-inputs.outputs.REF }}
       TAG: ${{ steps.set-inputs.outputs.TAG }}
+
+      RUNS_ON: ${{ steps.set-config.outputs.RUNS_ON }}
+
       CONTAINER_HOST: ${{ steps.set-vars.outputs.CONTAINER_HOST }}
       APPS: ${{ steps.set-vars.outputs.APPS }}
       ENVIRONMENT: ${{ steps.set-vars.outputs.ENVIRONMENT }}
@@ -46,6 +49,7 @@ jobs:
       VERSION: ${{ steps.set-vars.outputs.VERSION }}
       PRISTINE: ${{ steps.set-vars.outputs.PRISTINE }}
       DEPLOY: ${{ steps.set-vars.outputs.DEPLOY }}
+      
       VARIABLES_JSON: ${{ steps.set-more-vars.outputs.as-json }}
 
     steps:
@@ -67,6 +71,12 @@ jobs:
         with:
           ref: "${{ inputs.REF }}"
 
+      - name: Set job config
+        id: set-config
+        run: |
+          DIR="$(pwd)"
+          cat ${DIR}/environments/${ENVIRONMENT}/config | tee -a "$GITHUB_OUTPUT"
+
       - name: Export environment variables
         id: set-vars
         run: |
@@ -84,25 +94,13 @@ jobs:
           JSON_CONTENT=$(yq eval -o=json "${DIR}/environments/${ENVIRONMENT}/more_variables.yml" | jq -c)
           echo "as-json=$JSON_CONTENT" | tee -a "$GITHUB_OUTPUT"
 
-      - name: job json output
-        run: echo 'Job context is ${{ toJSON(job) }}'
-      
-      - name: job status
-        run: echo 'Job status context is ${{ toJSON(job.status) }}'
-      
-      - name: step status
-        run: | 
-          echo 'Step context is ${{ toJSON(steps.set-more-vars) }}'
-          echo 'Step context is ${{ toJSON(steps.set-more-vars.conclusion) }}'
-          echo 'Step context is ${{ toJSON(steps.set-more-vars.outcome) }}'
-          echo 'Step context is ${{ toJSON(steps.set-more-vars.outputs) }}'
-
   release-all-project:
     uses: the-gymcoder/workflows-catalog/.github/workflows/release-all.yml@init
     permissions:
       contents: read
       pull-requests: write
     with:
+      RUNS_ON: ${{ needs.import_variables.outputs.RUNS_ON }}
       REF: ${{ needs.import_variables.outputs.REF }}
       TAG: ${{ needs.import_variables.outputs.TAG }}
       ENVIRONMENT: ${{ needs.import_variables.outputs.ENVIRONMENT }}
