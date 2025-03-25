@@ -21,7 +21,7 @@ on:
         type: string
         required: true
         description: ENVIRONMENT
-        default: DEV
+        default: dev
       TAG:
         type: string
         required: true

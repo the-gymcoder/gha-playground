@@ -26,7 +26,7 @@ on:
         type: string
         required: true
         description: ENVIRONMENT
-        default: DEV
+        default: dev
 
 jobs:
   build-dr-project:
